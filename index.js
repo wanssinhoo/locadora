@@ -1,20 +1,17 @@
-var app = require('express')();
-var http = require('http').Server(app);
+var express = require('express');
+var app = express();
 var morgan = require('morgan');
 
-const port = process.env.PORT || 5000;
+var port = process.env.PORT || 5000;
 
 app.use(morgan('dev'));
+app.use(express.json());
 
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-//Chamada de api's
+//Chamada da api
 app.use('/app', require('./app/controller/locadora.controller'));
-app.use('/', function(req, res){ res.status(400).json({msg : 'Rota não encontrada.'}) });
+app.use('/', function(req, res){ res.status(404).json({msg : 'Rota não encontrada.'}) });
 
 //Inicia o servidor
-http.listen(port, function(){
+app.listen(port, function(){
     console.log('Servidor iniciado na porta: ' + port);
 });

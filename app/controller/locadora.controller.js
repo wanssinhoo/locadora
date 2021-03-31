@@ -40,12 +40,12 @@ Rota.post('/cadastro', function(req, res){
             return res.status(200).send({ msg : 'Conta cadastrada com sucesso.'});
         })
         .catch((erro) => {
-            return res.status(200).send({ msg : 'Erro ao cadastra conta.'});
+            return res.status(200).send({ msg : 'Erro ao se cadastrar.'});
         })
 
     })
     .catch((erro) => {
-        return res.status(400).send({ msg : 'Erro ao solicitar token.'});
+        return res.status(400).send({ msg : 'Erro ao verificar conta.'});
     })
 
 });// OK
@@ -78,14 +78,14 @@ Rota.post('/token', function(req, res){
         //Gera token de acesso com validade de 1H
         Jwt.sign(jsonUser, Config.chaveSecreta, { expiresIn: 3600 }, function(err, token) {
             if (err) 
-                return res.status(400).send({msg : "Erro ao gerar token."});
+                return res.status(400).send({msg : "Erro ao gerar token de acesso."});
             
             return res.status(200).send({token : token});
         });
 
     })
     .catch((erro) => {
-        return res.status(400).send({ msg : 'Erro ao solicitar token.'});
+        return res.status(400).send({ msg : 'Erro ao buscar usuário.'});
     })
 
 });// OK
@@ -102,13 +102,13 @@ Rota.get('/conta', Filtro.token, function(req, res, next){
     .then(respConta => {
         
         if(!respConta)
-            return res.status(400).json({msg : "Erro ao buscar dados de conta."});
+            return res.status(400).json({msg : "Conta não encontrada."});
 
         return res.status(200).json(respConta);
 
     })
     .catch((erro) => {
-        return res.status(400).send({ msg : 'Erro buscar conta.'});
+        return res.status(400).send({ msg : 'Erro ao buscar dados de conta.'});
     })
 
 });// OK
@@ -154,7 +154,7 @@ Rota.get('/filmes_alugados', Filtro.token, function(req, res, next){
         return res.status(200).json(respHistorico);
     })
     .catch((erro) => {
-        return res.status(400).send({ msg : 'Erro ao buscar filmes alugados.', erro});
+        return res.status(400).send({ msg : 'Erro ao buscar filmes alugados.'});
     })
 
 });// OK
@@ -258,7 +258,7 @@ Rota.put('/devolver_filme', Filtro.token, function(req, res){
 
     })
     .catch((erro) => {
-        return res.status(400).send({ msg : 'Erro ao buscar dados do aluguel.', erro});
+        return res.status(400).send({ msg : 'Erro ao buscar dados do aluguel.'});
     })
 
     //Atualiza o estoque do filme
@@ -289,7 +289,5 @@ Rota.put('/devolver_filme', Filtro.token, function(req, res){
     }
     
 });// OK
-
-
 
 module.exports = Rota;

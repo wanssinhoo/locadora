@@ -22,13 +22,13 @@ Filtro.headerRes = function (req, res, next) {
 //Verifica se existe token e se é válido
 Filtro.token = function (req, res, next) {
 
-	var token = req.body.token || req.query.token || req.params.token || req.headers.token;
+	var token = req.headers.token;
 
 	if (token && token != "") {
 
 		jwt.verify(token, Config.chaveSecreta, function(err, session) {
 			if (err) 
-				return res.status(400).json({ msg: 'Sua sessão expirou, faça login novamente.', status : 0 });		
+				return res.status(401).json({ msg: 'Sua sessão expirou, faça login novamente.', status : 0 });		
 
 			req.session = session;
 			next();
