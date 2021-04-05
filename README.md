@@ -26,7 +26,7 @@ $ git clone https://github.com/wanssinhoo/locadora.git
 $ cd locadora
 $ npm install
 
-Obs: Para os proximos comandos é nescessario que o banco de dados esteja criado e online.
+Obs: Para os proximos comandos é necessário que o banco de dados esteja criado e online.
 
 $ sequelize-cli db:migrate
 $ sequelize-cli db:seed:all
